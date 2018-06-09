@@ -43,8 +43,11 @@ nmap \z :w<CR>:!open %<CR><CR>
 " line wrapping on, this can cause the cursor to actually skip a few lines on the screen because
 " it's moving from line N to line N+1 in the file. I want this to act more visually -- I want `down'
 " to mean the next line on the screen
-nmap j gj
-nmap k gk
+"nmap j gj
+"nmap k gk
+let g:accelerated_jk_acceleration_table = [10,5,3]
+nmap j <Plug>(accelerated_jk_gj)
+nmap k <Plug>(accelerated_jk_gk)
 
 " You don't know what you're missing if you don't use this.
 nmap <C-e> :e#<CR>
@@ -94,10 +97,10 @@ autocmd VimResized * :wincmd =
 
 " Search for the word under the cursor in the current directory
 nmap <M-k>    mo:Ack! "\b<cword>\b" <CR>
-nmap <Esc>k   mo:Ack! "\b<cword>\b" <CR>
+"nmap <Esc>k   mo:Ack! "\b<cword>\b" <CR>
 nmap ˚        mo:Ack! "\b<cword>\b" <CR>
 nmap <M-S-k>  mo:Ggrep! "\b<cword>\b" <CR>
-nmap <Esc>K   mo:Ggrep! "\b<cword>\b" <CR>
+"nmap <Esc>K   mo:Ggrep! "\b<cword>\b" <CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window via bufkill.vim
 nmap <Esc>w :BD<CR>
@@ -236,6 +239,7 @@ set thesaurus+=~/.vim/mthes10/mthesaur.txt
 set wildmenu                " Show possible completions on command line
 set wildmode=list:longest,full " List all options and complete
 set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
+set clipboard=unnamed,unnamedplus
 
 " Essential for filetype plugins.
 filetype plugin indent on
@@ -405,6 +409,8 @@ endfunction
 " Make sure colored syntax mode is on, and make it Just Work with 256-color terminals.
 set background=dark
 let g:rehash256 = 1 " Something to do with Molokai?
+autocmd ColorScheme * highlight Normal ctermbg=none
+autocmd ColorScheme * highlight LineNr ctermbg=none
 colorscheme molokai
 if !has('gui_running')
   let g:solarized_termcolors=256
@@ -557,5 +563,4 @@ endif
 
 " Some plugin seems to search for something at startup, so this fixes that.
 silent! nohlsearch
-
 " vim:set tw=100:
