@@ -41,6 +41,11 @@ repos=(
   w0rp/ale
   wellle/targets.vim
   rhysd/accelerated-jk
+  joonty/vdebug
+  xolox/vim-misc
+  xolox/vim-session
+  xwsoul/vim-zephir
+  vim-scripts/smarty-syntax
 )
 
 set -e
