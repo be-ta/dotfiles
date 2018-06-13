@@ -84,7 +84,7 @@ cnoremap <Esc>d <S-right><Delete>
 cnoremap <C-g>  <C-c>
 
 " Use the space key to toggle folds
-nnoremap <space> za
+nnoremap <space> zi
 vnoremap <space> zf
 
 " Super fast window movement shortcuts

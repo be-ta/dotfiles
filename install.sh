@@ -3,7 +3,7 @@
 
 basedir="$HOME/.dotfiles"
 bindir="$HOME/bin"
-repourl="git://github.com/be-ta/dotfiles.git"
+repourl="git@github.com:be-ta/dotfiles.git"
 
 function symlink() {
   src="$1"
