@@ -38,6 +38,7 @@ nmap \u :setlocal list!<CR>:setlocal list?<CR>
 nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
 nmap \x :cclose<CR>
 nmap \z :w<CR>:!open %<CR><CR>
+nmap \] :TagbarToggle<CR>
 
 " Turn off linewise keys. Normally, the `j' and `k' keys move the cursor down one entire line. with
 " line wrapping on, this can cause the cursor to actually skip a few lines on the screen because
@@ -45,7 +46,7 @@ nmap \z :w<CR>:!open %<CR><CR>
 " to mean the next line on the screen
 "nmap j gj
 "nmap k gk
-let g:accelerated_jk_acceleration_table = [10,5,3]
+let g:accelerated_jk_acceleration_table = [10,5,1]
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
 
@@ -97,10 +98,10 @@ autocmd VimResized * :wincmd =
 
 " Search for the word under the cursor in the current directory
 nmap <M-k>    mo:Ack! "\b<cword>\b" <CR>
-"nmap <Esc>k   mo:Ack! "\b<cword>\b" <CR>
-nmap ˚        mo:Ack! "\b<cword>\b" <CR>
+nmap <Esc>F   mo:Ack! "\b<cword>\b" <CR>
+" nmap ˚        mo:Ack! "\b<cword>\b" <CR>
 nmap <M-S-k>  mo:Ggrep! "\b<cword>\b" <CR>
-"nmap <Esc>K   mo:Ggrep! "\b<cword>\b" <CR>
+nmap <Esc>G   mo:Ggrep! "\b<cword>\b" <CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window via bufkill.vim
 nmap <Esc>w :BD<CR>
@@ -191,6 +192,7 @@ set copyindent              " Make autoindent use the same chars as prev line
 set directory-=.            " Don't store temp files in cwd
 set encoding=utf8           " UTF-8 by default
 set fileencodings=euc-jp,sjis,iso-2022-jp,utf-8
+                            " File Encoding
 set expandtab               " No tabs
 set fileformats=unix,dos,mac  " Prefer Unix
 set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄
@@ -241,6 +243,17 @@ set wildmenu                " Show possible completions on command line
 set wildmode=list:longest,full " List all options and complete
 set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
 set clipboard=unnamed,unnamedplus
+set lazyredraw
+set number
+set ruler
+set noswapfile
+set undodir=./.vimundo,~/.vimundo
+
+" vim undo
+augroup vimrc-undofile
+  autocmd!
+  autocmd BufReadPre * setlocal undofile
+augroup END
 
 " Essential for filetype plugins.
 filetype plugin indent on
@@ -408,6 +421,8 @@ endfunction
 " NERDTree Option
 " ブックマークを表示
 let g:NERDTreeShowBookmarks=1
+" 引数なしの場合はツリーを開く
+autocmd vimenter * if !argc() | NERDTree | endif
 " 他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -438,6 +453,9 @@ augroup SessionAutocommands
     autocmd!
     autocmd VimEnter * nested if !argc() | OpenSession! session | SaveSession! session | endif
 augroup END
+
+" tagbar の設定
+let g:tagbar_width = 30        " 初期設定はwidth=40なのでちょっと幅とりすぎ。
 
 " ----------------------------------------------------------------------------
 " COLORS

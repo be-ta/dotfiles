@@ -18,6 +18,7 @@ repos=(
   itchyny/lightline.vim
   jparise/vim-graphql
   junegunn/fzf.vim
+  junegunn/fzf
   junegunn/goyo.vim
   mhartington/oceanic-next
   mileszs/ack.vim
@@ -46,6 +47,7 @@ repos=(
   xolox/vim-session
   xwsoul/vim-zephir
   vim-scripts/smarty-syntax
+  majutsushi/tagbar.git
 )
 
 set -e
