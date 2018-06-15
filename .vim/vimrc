@@ -247,6 +247,7 @@ set lazyredraw
 set number
 set ruler
 set noswapfile
+set tw=0
 set undodir=./.vimundo,~/.vimundo
 
 " vim undo
