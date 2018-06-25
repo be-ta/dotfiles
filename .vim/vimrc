@@ -195,7 +195,8 @@ set fileencodings=euc-jp,sjis,iso-2022-jp,utf-8
                             " File Encoding
 set expandtab               " No tabs
 set fileformats=unix,dos,mac  " Prefer Unix
-set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄
+"set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄
+set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:~
                             " Unicode chars for diffs/folds, and rely on
                             " Colors for window borders
 silent! set foldmethod=marker " Use braces by default
@@ -214,7 +215,8 @@ set infercase               " Completion recognizes capitalization
 set laststatus=2            " Always show the status bar
 set linebreak               " Break long lines by word, not char
 set list                    " Show whitespace as special chars - see listchars
-set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:· " Unicode characters for various things
+set listchars=tab:>\ ,extends:>,precedes:<,nbsp:*,trail:* " Unicode characters for various things
+"set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:· " Unicode characters for various things
 set matchtime=2             " Tenths of second to hilight matching paren
 set modelines=5             " How many lines of head & tail to look for ml's
 silent! set mouse=nvc       " Use the mouse, but not in insert mode
@@ -244,16 +246,25 @@ set wildmode=list:longest,full " List all options and complete
 set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
 set clipboard=unnamed,unnamedplus
 set lazyredraw
+set ttyfast
 set number
 set ruler
 set noswapfile
 set tw=0
+set ambiwidth=double
+set synmaxcol=3000
 set undodir=./.vimundo,~/.vimundo
 
 " vim undo
 augroup vimrc-undofile
   autocmd!
   autocmd BufReadPre * setlocal undofile
+augroup END
+
+" syntax setting
+augroup vimrc-highlight
+  autocmd!
+  autocmd FileType html,jsp,asp,php,xml,perl syntax sync minlines=500 maxlines=1000
 augroup END
 
 " Essential for filetype plugins.
@@ -582,6 +593,7 @@ au BufNewFile,BufRead *.md,*.markdown setlocal foldlevel=999 tw=0 nocin
 au BufNewFile,BufRead *.ni      setlocal ft=inform nolist ts=2 sw=2 noet
 au BufNewFile,BufRead *.plist   setf xml
 au BufNewFile,BufRead *.rb      setlocal noai
+au BufNewFile,BufRead *.php     setlocal noai
 au BufNewFile,BufRead *.rxml    setf ruby
 au BufNewFile,BufRead *.sass    setf sass
 au BufNewFile,BufRead *.ttml    setf xml
@@ -606,6 +618,13 @@ au FileType make setlocal nolist ts=4 sts=4 sw=4 noet
 au FileType markdown syn sync fromstart
 au Filetype gitcommit setlocal tw=80
 
+augroup END
+
+augroup SmartyHTML
+    autocmd!
+    autocmd Filetype smarty set filetype=smarty.html
+    au Filetype smarty set complete+=k
+    au BufNewFile,BufRead *.tpl     set filetype=smarty nocindent smartindent
 augroup END
 
 " ----------------------------------------------------------------------------
